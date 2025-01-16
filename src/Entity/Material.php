@@ -16,6 +16,10 @@ class Material
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\ManyToOne(inversedBy: 'materials')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Tip $tip = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -29,6 +33,18 @@ class Material
     public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getTip(): ?Tip
+    {
+        return $this->tip;
+    }
+
+    public function setTip(?Tip $tip): static
+    {
+        $this->tip = $tip;
 
         return $this;
     }
