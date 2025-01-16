@@ -20,6 +20,10 @@ class Step
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
+    #[ORM\ManyToOne(inversedBy: 'steps')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Tip $tip = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -45,6 +49,18 @@ class Step
     public function setDescription(string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getTip(): ?Tip
+    {
+        return $this->tip;
+    }
+
+    public function setTip(?Tip $tip): static
+    {
+        $this->tip = $tip;
 
         return $this;
     }

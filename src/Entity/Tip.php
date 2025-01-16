@@ -52,11 +52,18 @@ class Tip
     #[ORM\OneToMany(targetEntity: Material::class, mappedBy: 'tip', orphanRemoval: true)]
     private Collection $materials;
 
+    /**
+     * @var Collection<int, Step>
+     */
+    #[ORM\OneToMany(targetEntity: Step::class, mappedBy: 'tip', orphanRemoval: true)]
+    private Collection $steps;
+
     public function __construct()
     {
         $this->quantities = new ArrayCollection();
         $this->instructions = new ArrayCollection();
         $this->materials = new ArrayCollection();
+        $this->steps = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -220,6 +227,36 @@ class Tip
             // set the owning side to null (unless already changed)
             if ($material->getTip() === $this) {
                 $material->setTip(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Step>
+     */
+    public function getSteps(): Collection
+    {
+        return $this->steps;
+    }
+
+    public function addStep(Step $step): static
+    {
+        if (!$this->steps->contains($step)) {
+            $this->steps->add($step);
+            $step->setTip($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStep(Step $step): static
+    {
+        if ($this->steps->removeElement($step)) {
+            // set the owning side to null (unless already changed)
+            if ($step->getTip() === $this) {
+                $step->setTip(null);
             }
         }
 
