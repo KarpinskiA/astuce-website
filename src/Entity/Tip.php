@@ -40,9 +40,16 @@ class Tip
     #[ORM\OneToMany(targetEntity: Quantity::class, mappedBy: 'tip', orphanRemoval: true)]
     private Collection $quantities;
 
+    /**
+     * @var Collection<int, Instruction>
+     */
+    #[ORM\OneToMany(targetEntity: Instruction::class, mappedBy: 'tip', orphanRemoval: true)]
+    private Collection $instructions;
+
     public function __construct()
     {
         $this->quantities = new ArrayCollection();
+        $this->instructions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -146,6 +153,36 @@ class Tip
             // set the owning side to null (unless already changed)
             if ($quantity->getTip() === $this) {
                 $quantity->setTip(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Instruction>
+     */
+    public function getInstructions(): Collection
+    {
+        return $this->instructions;
+    }
+
+    public function addInstruction(Instruction $instruction): static
+    {
+        if (!$this->instructions->contains($instruction)) {
+            $this->instructions->add($instruction);
+            $instruction->setTip($this);
+        }
+
+        return $this;
+    }
+
+    public function removeInstruction(Instruction $instruction): static
+    {
+        if ($this->instructions->removeElement($instruction)) {
+            // set the owning side to null (unless already changed)
+            if ($instruction->getTip() === $this) {
+                $instruction->setTip(null);
             }
         }
 
