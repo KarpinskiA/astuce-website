@@ -14,7 +14,7 @@ final class Version20250116111057 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return 'Relation Tip-Ingredient';
+        return 'Relation Tip-Ingredient through the linking table Quantity';
     }
 
     public function up(Schema $schema): void
