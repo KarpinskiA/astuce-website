@@ -1,0 +1,12 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création d'une astuce{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <h1 class="mb-4">Créer une nouvelle astuce</h1>
+    <div class="card shadow-sm p-4">
+        {{ form(form) }}
+    </div>
+</div>
+{% endblock %}

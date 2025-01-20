@@ -23,7 +23,7 @@ class Quantity
     #[ORM\JoinColumn(nullable: false)]
     private ?Tip $tip = null;
 
-    #[ORM\ManyToOne(inversedBy: 'quantities')]
+    #[ORM\ManyToOne(inversedBy: 'quantities', cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?Ingredient $ingredient = null;
 
