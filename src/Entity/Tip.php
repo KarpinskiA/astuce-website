@@ -37,25 +37,25 @@ class Tip
     /**
      * @var Collection<int, Quantity>
      */
-    #[ORM\OneToMany(targetEntity: Quantity::class, mappedBy: 'tip', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Quantity::class, cascade: ['persist', 'remove'], mappedBy: 'tip', orphanRemoval: true)]
     private Collection $quantities;
 
     /**
      * @var Collection<int, Instruction>
      */
-    #[ORM\OneToMany(targetEntity: Instruction::class, mappedBy: 'tip', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Instruction::class, cascade: ['persist', 'remove'], mappedBy: 'tip', orphanRemoval: true)]
     private Collection $instructions;
 
     /**
      * @var Collection<int, Material>
      */
-    #[ORM\OneToMany(targetEntity: Material::class, mappedBy: 'tip', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Material::class, cascade: ['persist', 'remove'], mappedBy: 'tip', orphanRemoval: true)]
     private Collection $materials;
 
     /**
      * @var Collection<int, Step>
      */
-    #[ORM\OneToMany(targetEntity: Step::class, mappedBy: 'tip', orphanRemoval: true)]
+    #[ORM\OneToMany(targetEntity: Step::class, cascade: ['persist', 'remove'], mappedBy: 'tip', orphanRemoval: true)]
     private Collection $steps;
 
     public function __construct()
