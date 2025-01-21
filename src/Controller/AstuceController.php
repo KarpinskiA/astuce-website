@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Tip;
 use App\Form\TipType;
+use App\Repository\TipRepository;
 use App\Service\TipService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,10 +15,25 @@ use Symfony\Component\Routing\Attribute\Route;
 class AstuceController extends AbstractController
 {
     #[Route('/', name: 'app_astuce')]
-    public function index(): Response
+    public function index(TipRepository $tipRepository): Response
     {
         return $this->render('astuce/index.html.twig', [
-            'controller_name' => 'AstuceController',
+            'tips' => $tipRepository->findAll(),
+        ]);
+    }
+
+    #[Route('/astuce/{slug}', name: 'app_astuce_show', methods: ['GET'])]
+    public function show(string $slug, TipRepository $tipRepository): Response
+    {
+        $result = $tipRepository->findDetailOfOneTip($slug);
+
+        if (!$result) {
+            throw $this->createNotFoundException('Cette astuce n\'existe pas.');
+        }
+
+        return $this->render('astuce/show.html.twig', [
+            'tip' => $result['tip'],
+            'ingredientQuantities' => $result['ingredientQuantities'],
         ]);
     }
 

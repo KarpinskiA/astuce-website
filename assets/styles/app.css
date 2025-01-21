@@ -1,3 +1,15 @@
 /* body {
     background-color: skyblue;
 } */
+
+.collection-widget {
+    width: 100%;
+}
+
+.collection-widget fieldset {
+    width: 100%;
+}
+
+.collection-widget fieldset > div {
+    width: 100%;
+}
