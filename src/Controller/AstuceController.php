@@ -22,10 +22,10 @@ class AstuceController extends AbstractController
         ]);
     }
 
-    #[Route('/astuce/{slug}', name: 'app_astuce_show', methods: ['GET'])]
-    public function show(string $slug, TipRepository $tipRepository): Response
+    #[Route('/astuce/{id}', name: 'app_astuce_show', methods: ['GET'])]
+    public function show(int $id, TipRepository $tipRepository): Response
     {
-        $result = $tipRepository->findDetailOfOneTip($slug);
+        $result = $tipRepository->findDetailOfOneTip($id);
 
         if (!$result) {
             throw $this->createNotFoundException('Cette astuce n\'existe pas.');

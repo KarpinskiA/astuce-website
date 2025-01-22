@@ -19,15 +19,15 @@ class TipRepository extends ServiceEntityRepository
     /**
      * Finds detailed information about a specific tip by its slug
      * 
-     * @param string $slug The unique slug identifier of the tip
+     * @param int $id The unique id of the tip
      * @return array|null Returns an array containing the tip and its related data, or null if not found
      */
-    public function findDetailOfOneTip(string $slug): ?array
+    public function findDetailOfOneTip(int $id): ?array
     {
         // This query fetches a single tip with all its related entities
         $result = $this->createQueryBuilder('t')
-            ->andWhere('t.slug = :slug')
-            ->setParameter('slug', $slug)
+            ->andWhere('t.id = :id')
+            ->setParameter('id', $id)
             ->leftJoin('t.quantities', 'q')
             ->addSelect('q')
             ->leftJoin('q.ingredient', 'ing')
