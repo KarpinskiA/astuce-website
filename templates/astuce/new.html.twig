@@ -3,118 +3,13 @@
 {% block title %}Création d'une astuce{% endblock %}
 
 {% block body %}
-    <div class="container py-5">
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <nav class="mb-4">
-                    <a href="{{ path('app_astuce') }}" class="text-primary text-decoration-none">
-                        <i class="bi bi-arrow-left"></i> Retour aux astuces
-                    </a>
-                </nav>
-
-                <div class="card shadow">
-                    <div class="card-body p-4">
-                        <h1 class="display-4 mb-4">Créer une nouvelle astuce</h1>
-                        
-                        {{ form_start(form, {'attr': {'class': 'needs-validation'}}) }}
-                            
-                            {# Titre et Description #}
-                            <div class="mb-4">
-                                {{ form_row(form.title, {
-                                    'attr': {
-                                        'class': 'form-control form-control-lg',
-                                        'placeholder': 'Un titre accrocheur pour votre astuce'
-                                    }
-                                }) }}
-                            </div>
-                            <div class="mb-5">
-                                {{ form_row(form.description, {
-                                    'attr': {
-                                        'class': 'form-control',
-                                        'rows': 3
-                                    }
-                                }) }}
-                            </div>
-
-                            {# Ingrédients et Matériel #}
-                            <div class="row mb-5">
-                                <div class="col-md-6 mb-4 mb-md-0">
-                                    <div class="card bg-light">
-                                        <div class="card-body">
-                                            <h2 class="h4 mb-3">{{ form_label(form.quantities) }}</h2>
-                                            {{ form_widget(form.quantities, {
-                                                'row_attr': {'class': 'w-100'},
-                                                'attr': {
-                                                    'class': 'collection-widget',
-                                                    'data-form-collection-add-label-value': 'Ajouter un ingrédient',
-                                                    'data-form-collection-delete-label-value': 'Supprimer'
-                                                }
-                                            }) }}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="card bg-light">
-                                        <div class="card-body">
-                                            <h2 class="h4 mb-3">{{ form_label(form.materials) }}</h2>
-                                            {{ form_widget(form.materials, {
-                                                'row_attr': {'class': 'w-100'},
-                                                'attr': {
-                                                    'class': 'collection-widget',
-                                                    'data-form-collection-add-label-value': 'Ajouter un matériel',
-                                                    'data-form-collection-delete-label-value': 'Supprimer'
-                                                }
-                                            }) }}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            {# Étapes #}
-                            <div class="mb-5">
-                                <div class="card bg-light">
-                                    <div class="card-body">
-                                        <h2 class="h4 mb-3">Étapes à suivre</h2>
-                                        {{ form_widget(form.steps, {
-                                            'row_attr': {'class': 'w-100'},
-                                            'attr': {
-                                                'class': 'collection-widget',
-                                                'data-form-collection-add-label-value': 'Ajouter une étape',
-                                                'data-form-collection-delete-label-value': 'Supprimer'
-                                            }
-                                        }) }}
-                                    </div>
-                                </div>
-                            </div>
-
-                            {# Instructions #}
-                            <div class="mb-5">
-                                <div class="card bg-light">
-                                    <div class="card-body">
-                                        <h2 class="h4 mb-3">Mode d'emploi</h2>
-                                        {{ form_widget(form.instructions, {
-                                            'row_attr': {'class': 'w-100'},
-                                            'attr': {
-                                                'class': 'collection-widget',
-                                                'data-form-collection-add-label-value': 'Ajouter une instruction',
-                                                'data-form-collection-delete-label-value': 'Supprimer'
-                                            }
-                                        }) }}
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="text-end">
-                                {{ form_widget(form.save, {
-                                    'attr': {
-                                        'class': 'btn btn-primary btn-lg'
-                                    }
-                                }) }}
-                            </div>
-                        {{ form_end(form) }}
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div class="container">
+        <nav class="mb-4">
+            <a href="{{ path('app_astuce') }}" class="text-primary text-decoration-none">
+                <i class="bi bi-arrow-left"></i> Retour aux astuces
+            </a>
+        </nav>
+        <h1 class="h1 mb-4">Créer une nouvelle astuce</h1>
+        {{ form(form)}}
     </div>
 {% endblock %}

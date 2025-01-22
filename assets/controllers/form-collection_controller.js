@@ -8,16 +8,30 @@ export default class extends Controller {
   }
 
   /**
-  * Dynamically injects “Add” and “Remove” buttons
+  * Dynamically injects "Add" and "Remove" buttons and adds first element
   */
   connect() {
     this.index = this.element.childElementCount
+
+    // TODO Ajouter le premier élément si la collection est vide
+    // if (this.index === 0) {
+    //   const firstElement = document.createRange().createContextualFragment(
+    //     this.element.dataset['prototype'].replaceAll('__name__', this.index)
+    //   ).firstElementChild
+    //   this.addDeleteButton(firstElement)
+    //   this.element.append(firstElement)
+    //   this.index++
+    // } else {
+    //   // Ajouter les boutons de suppression aux éléments existants
+    //   this.element.childNodes.forEach(this.addDeleteButton)
+    // }
+
     const btn = document.createElement('button')
     btn.setAttribute('class', 'btn btn-success')
     btn.innerText = this.addLabelValue || 'Ajouter un élément'
     btn.setAttribute('type', 'button')
     btn.addEventListener('click', this.addElement)
-    this.element.childNodes.forEach(this.addDeleteButton)
+    this.element.childNodes.forEach(this.addDeleteButton) // TODO supprimer si le premier élément est ajouté
     this.element.append(btn)
   }
 
@@ -31,6 +45,10 @@ export default class extends Controller {
     const element = document.createRange().createContextualFragment(
       this.element.dataset['prototype'].replaceAll('__name__', this.index)
     ).firstElementChild
+    const orderNumberInput = element.querySelector('[name*="[orderNumber]"]')
+    if (orderNumberInput) {
+      orderNumberInput.value = this.index + 1
+    }
     this.addDeleteButton(element)
     this.index++
     e.currentTarget.insertAdjacentElement('beforebegin', element)

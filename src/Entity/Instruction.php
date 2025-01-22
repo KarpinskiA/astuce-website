@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\InstructionRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -15,9 +16,16 @@ class Instruction
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: 'L\'ordre du mode d\'emploi est obligatoire')]
+    #[Assert\Positive(message: 'L\'ordre du mode d\'emploi doit être un nombre supérieur à 1')]
     private ?int $orderNumber = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'La description de l\'étape du mode d\'emploi est obligatoire')]
+    #[Assert\Length(
+        min: 10,
+        minMessage: 'La description du mode d\'emploi doit contenir au moins {{ limit }} caractères'
+    )]
     private ?string $description = null;
 
     #[ORM\ManyToOne(inversedBy: 'instructions')]

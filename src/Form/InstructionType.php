@@ -18,6 +18,7 @@ class InstructionType extends AbstractType
                 'label' => 'Ordre de l\'étape',
                 'attr' => [
                     'placeholder' => 'Numéro de l\'étape (par exemple : 1)',
+                    'min' => 1,
                 ],
             ])
             ->add('description', TextType::class, [
