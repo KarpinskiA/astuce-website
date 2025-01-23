@@ -57,4 +57,22 @@ class AstuceController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/astuce/{id}/edit', name: 'app_astuce_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Tip $tip, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(TipType::class, $tip);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_astuce', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->render('astuce/edit.html.twig', [
+            'tip' => $tip,
+            'form' => $form,
+        ]);
+    }
 }

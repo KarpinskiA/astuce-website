@@ -15,6 +15,9 @@
                     <div class="card-body p-4">
                         <header class="mb-5">
                             <h1 class="display-4 fw-bold mb-3">{{ tip.title }}</h1>
+                            <a href="{{ path('app_astuce_edit', {'id': tip.id} ) }}" class="text-primary text-decoration-none">
+                                Editer
+                            </a>
                             <div class="text-muted mb-3">
                                 <i class="bi bi-calendar-event me-2"></i>
                                 <time datetime="{{ tip.createdAt|date('Y-m-d') }}">
