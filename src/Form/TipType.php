@@ -6,7 +6,6 @@ use App\Entity\Tip;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -51,6 +50,7 @@ class TipType extends AbstractType
             ])
             ->add('steps', CollectionType::class, [
                 'entry_type' => StepType::class,
+                'label' => 'Les étapes de votre astuce',
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
@@ -61,6 +61,7 @@ class TipType extends AbstractType
             ])
             ->add('instructions', CollectionType::class, [
                 'entry_type' => InstructionType::class,
+                'label' => 'Le mode d\'emploi de votre astuce',
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
@@ -79,6 +80,9 @@ class TipType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Tip::class,
+            'attr' => [
+                'novalidate' => 'novalidate'
+            ]
         ]);
     }
 }

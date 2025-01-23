@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\TipRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -17,9 +18,21 @@ class Tip
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le titre est obligatoire')]
+    #[Assert\Length(
+        min: 5,
+        max: 255,
+        minMessage: 'Le titre doit contenir au moins {{ limit }} caractères',
+        maxMessage: 'Le titre ne peut pas dépasser {{ limit }} caractères'
+    )]
     private ?string $title = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message: 'La description de l\'astuce est obligatoire')]
+    #[Assert\Length(
+        min: 10,
+        minMessage: 'La description doit contenir au moins {{ limit }} caractères'
+    )]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
@@ -34,12 +47,22 @@ class Tip
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $updatedAt = null;
 
+    #[Assert\Valid]
+    #[Assert\Count(
+        min: 1,
+        minMessage: 'Vous devez ajouter au moins un ingrédient'
+    )]
     /**
      * @var Collection<int, Quantity>
      */
     #[ORM\OneToMany(targetEntity: Quantity::class, cascade: ['persist', 'remove'], mappedBy: 'tip', orphanRemoval: true)]
     private Collection $quantities;
 
+    #[Assert\Valid]
+    #[Assert\Count(
+        min: 1,
+        minMessage: 'Vous devez ajouter au moins une étape dans le mode d\'emploi'
+    )]
     /**
      * @var Collection<int, Instruction>
      */
