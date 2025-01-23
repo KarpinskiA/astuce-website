@@ -6,6 +6,7 @@ use App\Entity\Tip;
 use App\Form\TipType;
 use App\Repository\TipRepository;
 use App\Service\TipService;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -65,6 +66,7 @@ class AstuceController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $tip->setUpdatedAt(new DateTimeImmutable());
             $entityManager->flush();
 
             return $this->redirectToRoute('app_astuce', [], Response::HTTP_SEE_OTHER);
@@ -74,5 +76,14 @@ class AstuceController extends AbstractController
             'tip' => $tip,
             'form' => $form,
         ]);
+    }
+
+    #[Route('/astuce/{id}/delete', name: 'app_astuce_delete')]
+    public function delete(Tip $tip, EntityManagerInterface $entityManager): Response
+    {
+        $entityManager->remove($tip);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_astuce', [], Response::HTTP_SEE_OTHER);
     }
 }
