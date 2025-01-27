@@ -17,8 +17,7 @@ class EmailVerifier
         private VerifyEmailHelperInterface $verifyEmailHelper,
         private MailerInterface $mailer,
         private EntityManagerInterface $entityManager
-    ) {
-    }
+    ) {}
 
     public function sendEmailConfirmation(string $verifyEmailRouteName, User $user, TemplatedEmail $email): void
     {
@@ -46,6 +45,10 @@ class EmailVerifier
         $this->verifyEmailHelper->validateEmailConfirmationFromRequest($request, (string) $user->getId(), (string) $user->getEmail());
 
         $user->setVerified(true);
+        // Set role 'USER_VERIFY'
+        $roles = $user->getRoles();
+        $roles[] = 'USER_VERIFY';
+        $user->setRoles(array_unique($roles));
 
         $this->entityManager->persist($user);
         $this->entityManager->flush();
