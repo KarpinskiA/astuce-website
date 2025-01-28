@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class AstuceController extends AbstractController
 {
-    #[Route('/', name: 'app_astuce')]
+    #[Route('/', name: 'app_astuce', methods: ['GET'])]
     public function index(TipRepository $tipRepository): Response
     {
         return $this->render('astuce/index.html.twig', [
@@ -23,7 +23,7 @@ class AstuceController extends AbstractController
         ]);
     }
 
-    #[Route('/astuce/{id}', name: 'app_astuce_show', methods: ['GET'])]
+    #[Route('/astuce/{id}', name: 'app_astuce_show', methods: ['GET'], requirements: ['id' => '\d+'])]
     public function show(int $id, TipRepository $tipRepository): Response
     {
         $result = $tipRepository->findDetailOfOneTip($id);
@@ -38,7 +38,7 @@ class AstuceController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_astuce_new')]
+    #[Route('/astuce/new', name: 'app_astuce_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager, TipService $tipService): Response
     {
         $tip = new Tip();
@@ -59,7 +59,7 @@ class AstuceController extends AbstractController
         ]);
     }
 
-    #[Route('/astuce/{id}/edit', name: 'app_astuce_edit', methods: ['GET', 'POST'])]
+    #[Route('/astuce/{id}/edit', name: 'app_astuce_edit', methods: ['GET', 'POST'], requirements: ['id' => '\d+'])]
     public function edit(Request $request, Tip $tip, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(TipType::class, $tip);
@@ -78,11 +78,13 @@ class AstuceController extends AbstractController
         ]);
     }
 
-    #[Route('/astuce/{id}/delete', name: 'app_astuce_delete')]
-    public function delete(Tip $tip, EntityManagerInterface $entityManager): Response
+    #[Route('/astuce/{id}', name: 'app_astuce_delete', methods: ['POST'], requirements: ['id' => '\d+'])]
+    public function delete(Request $request, Tip $tip, EntityManagerInterface $entityManager): Response
     {
-        $entityManager->remove($tip);
-        $entityManager->flush();
+        if ($this->isCsrfTokenValid('delete' . $tip->getId(), $request->getPayload()->getString('_token'))) {
+            $entityManager->remove($tip);
+            $entityManager->flush();
+        }
 
         return $this->redirectToRoute('app_astuce', [], Response::HTTP_SEE_OTHER);
     }

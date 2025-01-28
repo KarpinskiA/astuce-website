@@ -47,7 +47,7 @@ class EmailVerifier
         $user->setVerified(true);
         // Set role 'USER_VERIFY'
         $roles = $user->getRoles();
-        $roles[] = 'USER_VERIFY';
+        $roles[] = 'ROLE_USER_VERIFY';
         $user->setRoles(array_unique($roles));
 
         $this->entityManager->persist($user);
