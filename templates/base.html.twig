@@ -43,13 +43,15 @@
                                 <a class="nav-link {{ app.current_route == 'app_register' ? 'active' : '' }}" href="{{ path('app_register') }}">Register</a>
                             </li>
                         {% endif %}
-                        
                     </ul>
                 </div>
             </div>
         </nav>
 
         <div class="container my-4">
+            {# Messages flash #}
+            {% include 'partials/flash.html.twig' %}
+
             {% block body %}{% endblock %}
         </div>
         {# CDN Bootstrap JS #}
