@@ -10,7 +10,7 @@
             </div>
             {% if is_granted('ROLE_USER_VERIFY') %}
                 <div class="col-auto">
-                    <a href="{{ path('app_astuce_new') }}" class="btn btn-primary">
+                    <a href="{{ path('app_front_tip_new') }}" class="btn btn-primary">
                         <i class="bi bi-plus-lg me-2"></i>Ajouter une astuce
                     </a>
                 </div>
@@ -25,7 +25,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <h2 class="h4 card-title mb-3">{{ tip.title }}</h2>
                                 {% if is_granted('ROLE_ADMIN') %}
-                                    {{ include('astuce/_delete_form.html.twig') }}
+                                    {{ include('front/tip/_delete_form.html.twig') }}
                                 {% endif %}
                             </div>
                             <p class="card-text text-muted mb-3">
@@ -36,7 +36,13 @@
                                     <i class="bi bi-calendar-event me-1"></i>
                                     {{ tip.createdAt|date('d/m/Y') }}
                                 </small>
-                                <a href="{{ path('app_astuce_show', {'id': tip.id}) }}" 
+                                <small class="text-muted">
+                                    <i class="bi bi-person me-1"></i>
+                                    <a href="{{ path('app_profil_show', {'id': tip.user.id} ) }}" class="text-muted">
+                                        {{ tip.user.username }}
+                                    </a>
+                                </small>
+                                <a href="{{ path('app_front_tip_show', {'id': tip.id}) }}" 
                                    class="btn btn-outline-primary btn-sm">
                                     Lire la suite
                                 </a>

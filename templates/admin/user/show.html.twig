@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Utilisateur : {{ user.username }}{% endblock %}
+
+{% block body %}
+    <nav class="mb-4">
+        <a href="{{ path('app_admin_user_index') }}" class="text-primary text-decoration-none">
+            <i class="bi bi-arrow-left"></i> Retour dashboard utilisateur
+        </a>
+    </nav>
+    
+    <h1>Utilisateur : {{ user.username }}</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ user.id }}</td>
+            </tr>
+            <tr>
+                <th>Pseudo</th>
+                <td>{{ user.username }}</td>
+            </tr>
+            <tr>
+                <th>Rôles</th>
+                <td>
+                {% for role in user.roles %}
+                    <p>{{ role|join(', ') }}</p>
+                {% endfor %}
+                </td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Email vérifié</th>
+                <td>{{ user.isVerified ? '✅ Oui' : '❌ Non' }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}" class="btn btn-secondary mb-2">Modifier</a>
+
+    {{ include('admin/user/_delete_form.html.twig') }}
+{% endblock %}

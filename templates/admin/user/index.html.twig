@@ -1,0 +1,44 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des utilisateurs{% endblock %}
+
+{% block body %}
+    <h1>Liste des utilisateurs</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Pseudo</th>
+                <th>Rôles</th>
+                <th>Email</th>
+                <th>Email vérifié</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.roles ? user.roles|join(', ') : '' }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.isVerified ? '✅ Oui' : '❌ Non' }}</td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <a href="{{ path('app_admin_user_show', {'id': user.id}) }}" class="me-2"=>Voir</a>
+                        <a href="{{ path('app_admin_user_edit', {'id': user.id}) }}" class="me-2"=>Modifier</a>
+                        {{ include('admin/user/_delete_form.html.twig') }}
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Aucun utilisateur trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_user_new') }}">Créer un nouvel utilisateur</a>
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Les astuces{% endblock %}
+
+{% block body %}
+    <h1>Les astuces</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>Slug</th>
+                <th>Status</th>
+                <th>Créée le</th>
+                <th>Modifiée le</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tip in tips %}
+            <tr>
+                <td>{{ tip.id }}</td>
+                <td>{{ tip.title }}</td>
+                <td>{{ tip.description }}</td>
+                <td>{{ tip.slug }}</td>
+                <td>{{ tip.status }}</td>
+                <td>{{ tip.createdAt ? tip.createdAt|date('d-m-Y H:i') : '' }}</td>
+                <td>{{ tip.updatedAt ? tip.updatedAt|date('d-m-Y H:i') : '' }}</td>
+                <td>
+                    <div class="d-flex align-items-center">
+                        <a href="{{ path('app_admin_tip_show', {'id': tip.id}) }}" class="me-2">Voir</a>
+                        <a href="{{ path('app_admin_tip_edit', {'id': tip.id}) }}" class="me-2">Modifier</a>
+                        {{ include('admin/tip/_delete_form.html.twig') }}
+                    </div>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">Aucune astuce trouvée</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_admin_tip_new') }}">Créer une nouvelle astuce</a>
+{% endblock %}
