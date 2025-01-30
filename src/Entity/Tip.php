@@ -81,6 +81,10 @@ class Tip
     #[ORM\OneToMany(targetEntity: Step::class, cascade: ['persist', 'remove'], mappedBy: 'tip', orphanRemoval: true)]
     private Collection $steps;
 
+    #[ORM\ManyToOne(inversedBy: 'tips')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->quantities = new ArrayCollection();
@@ -282,6 +286,18 @@ class Tip
                 $step->setTip(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): static
+    {
+        $this->user = $user;
 
         return $this;
     }

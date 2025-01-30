@@ -1,0 +1,79 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card shadow">
+                    <div class="card-body p-4">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <h1 class="display-4 mb-0">Mon compte</h1>
+                            
+                            <div class="d-flex justify-content-between align-items-center">
+                                {% if app.user and app.user.id == user.id %}
+                                    <a href="{{ path('app_profil_edit', {'id': user.id}) }}" class="btn btn-outline-primary me-4">
+                                        <i class="bi bi-pencil me-2"></i>Modifier
+                                    </a>
+                                {% endif %}
+                                {% if app.user and app.user.id == user.id %}
+                                    {% include "/front/user/_delete_form.html" %}
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <h2 class="h5 text-muted mb-2">Nom d'utilisateur</h2>
+                                            <p class="h4">{{ user.username }}</p>
+                                        </div>
+                                        {% if user.email is defined %}
+                                            <div class="mb-3">
+                                                <h2 class="h5 text-muted mb-2">Email</h2>
+                                                <p class="h4">{{ user.email }}</p>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mt-4">
+                            <div class="col-md-8">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h2 class="h4">Mes astuces</h2>
+                                        <ul class="list-group list-group-flush">
+                                            {% for tip in user.tips %}
+                                                <li class="list-group-item">
+                                                    <a href="{{ path('app_front_tip_show', {'id': tip.id}) }}">
+                                                        {{ tip.title }}
+                                                    </a>
+                                                </li>
+                                            {% else %}
+                                                <li class="list-group-item">
+                                                    Aucune astuce trouvée.
+                                                    {% if is_granted('ROLE_USER_VERIFY') %}
+                                                        <a href="{{ path('app_front_tip_new') }}">
+                                                            Créer ma première astuce
+                                                        </a>
+                                                    {% else %}
+                                                        TODO: Ajouter un lien pour vérifier l'email
+                                                    {% endif %}
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

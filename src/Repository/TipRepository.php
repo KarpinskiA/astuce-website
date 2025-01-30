@@ -38,6 +38,8 @@ class TipRepository extends ServiceEntityRepository
             ->addSelect('s')
             ->leftJoin('t.instructions', 'i')
             ->addSelect('i')
+            ->leftJoin('t.user', 'u')
+            ->addSelect('u')
             ->getQuery()
             ->getOneOrNullResult();
 

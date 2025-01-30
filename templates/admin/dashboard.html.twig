@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+    <h1>Dashboard</h1>
+
+    <ul>
+        <li>
+            <a href="{{ path('app_admin_user_index') }}">Utilisateurs</a>
+        </li>
+        <li>
+            <a href="{{ path('app_admin_tip_index') }}">Les astuces</a>
+        </li>
+    </ul>
+{% endblock %}
