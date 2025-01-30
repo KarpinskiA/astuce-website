@@ -14,7 +14,7 @@ final class Version20250123092423 extends AbstractMigration
 {
     public function getDescription(): string
     {
-        return '';
+        return 'Adding is_verified column to User table for email verification';
     }
 
     public function up(Schema $schema): void
